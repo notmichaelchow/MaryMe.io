@@ -1,0 +1,138 @@
+html {
+    background: #e6e9e9;
+    background-image: linear-gradient(270deg, rgb(230, 233, 233) 0%, rgb(216, 221, 221) 100%);
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    background: white;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.06);
+    color: #545454;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 2em 2em 60em;
+}
+.myTitle {
+    position: absolute;
+    top: 2%;
+    left: 29%
+}
+.howCan {
+    position: absolute;
+    top: 50%;
+}
+.doYou {
+    position: absolute;
+    top: 20%;
+    left: 21.5%;
+}
+.intro {
+    position: absolute;
+    top: 55%
+}
+.myButton {
+    position: absolute;
+    top: 41.6%;
+    left: 38.7%;
+	background-color:#00B16A;
+	-moz-border-radius:28px;
+	-webkit-border-radius:28px;
+	border-radius:11px;
+	#border:1px solid black;
+	display:inline-block;
+	cursor:pointer;
+	color:black;
+	font-family:arial;
+	font-size:19px;
+	padding:16px 31px;
+	text-decoration:none;
+	text-shadow:0px 0px 0px #2f6627;
+    align-content: center;    
+}
+.myButton:hover {
+	background-color:#5cbf2a;
+}
+
+.mmjIcon {
+    position: absolute;
+    top: 25%;
+    left: 46%;
+    animation: colorize 2s cubic-bezier(0, 0, .78, .36) 1;
+    background: transparent;
+    display: block;
+    margin: 1.3em auto;
+    max-width: 95%;
+}
+
+.sick {
+    position: absolute;
+    top: 28%;
+    left: 29%;
+}
+
+.healthy {
+    position: absolute;
+    top: 28%;
+    left: 59%;                                            %; 
+}
+
+.thcStructure {
+    position: absolute;
+    top: 79%;
+    left: 4%;
+}
+.cbdStructure{
+    position: absolute;
+    top: 79%;
+    left: 29%
+}
+.cbcStructure{
+    position: absolute;
+    top: 79%;
+    left: 54%
+}
+.cbgStructure{
+    position: absolute;
+    top: 79%;
+    left: 79%
+}
+
+h1, h3 {
+    color: black;
+    font-weight: 600;
+    line-height: 1.3; 
+    text-align: center
+}
+
+h4, h5, h6 {
+    color: black;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+b, strong {
+    font-weight: 600;
+}
+
+samp {
+    display: none;
+}
+
+
+.thcStructure {
+    
+}
+
+@keyframes colorize {
+    0% {
+        -webkit-filter: grayscale(100%);
+        filter: grayscale(100%);
+    }
+    100% {
+        -webkit-filter: grayscale(0%);
+        filter: grayscale(0%);
+    }
+}

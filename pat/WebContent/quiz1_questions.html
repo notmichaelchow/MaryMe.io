@@ -2,12 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>MJJ Evaluation</title>
 </head>
 <body>
-	<div class="question" id="q1">
+	<div class="question">
 		<p>Select your birth year</p>
 		<select id="q1">
+			<option value="-1" selected>-</option>
 			<option value="2007">2007</option>
 			<option value="2006">2006</option>
 			<option value="2005">2005</option>
@@ -97,9 +98,11 @@
 			<option value="1921">1921</option>
 			<option value="1920">1920</option>
 		</select>
-		<div class="question" id="q2">
+		</div>
+		<div class="question">
 			<p>Which state do you live in?</p>
-			<select>
+			<select id='q3'>
+				<option value="-1">-</option>
 				<option value="AL">Alabama</option>
 				<option value="AK">Alaska</option>
 				<option value="AZ">Arizona</option>
@@ -111,7 +114,7 @@
 				<option value="DC">District Of Columbia</option>
 				<option value="FL">Florida</option>
 				<option value="GA">Georgia</option>
-				<option value="....HI">Hawaii</option>
+				<option value="HI">Hawaii</option>
 				<option value="ID">Idaho</option>
 				<option value="IL">Illinois</option>
 				<option value="IN">Indiana</option>
@@ -153,7 +156,7 @@
 				<option value="WY">Wyoming</option>
 			</select>
 		</div>
-		<div class="question" id="q3">
+		<div class="question">
 			<p>Check the following that apply to you</p>
 			<input type="checkbox" id="cancer"> <label for="cancer">Cancer</label><br>
 			<input type="checkbox" id="glaucoma"> <label for="glaucoma">Glaucoma</label><br>
@@ -183,6 +186,72 @@
 			<input type="checkbox" id="dysplasia"> <label for="dysplasia">Fibrous Dysplasia</label><br>
 			<input type="checkbox" id="myoclonus"> <label for="myoclonus">Myoclonus</label><br>
 			<input type="checkbox" id="spinalcord"> <label for="spinalcord">Spinal Cord Disease</label><br>
+			<input type="checkbox" id="huntingtons"> <label for="huntingtons">Huntington's Disease</label><br>
+		</div>
+		<div>
+			<button id="submit">Check your eligibility!</button>
+		</div>
+		<div>
+			<p id="eligibility"></p>
 		</div>
 </body>
+
+<script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+	// Initialize Firebase
+	var config = {
+		apiKey : "AIzaSyAXboJtgdqVy4Ifw0wnptXDiwNmfxWSz-w",
+		authDomain : "mjjweb-dde5f.firebaseapp.com",
+		databaseURL : "https://mjjweb-dde5f.firebaseio.com",
+		storageBucket : "mjjweb-dde5f.appspot.com",
+		messagingSenderId : "421195394649"
+	};
+	firebase.initializeApp(config);
+	
+	var symptoms = firebase.database().ref('symptoms');
+	
+	// Event after clicking submit button
+	$("#submit").click(function() {
+		var curr_state = $("#q3").find(":selected").val();
+		var birth_year = $("#q1").find(":selected").val();
+		
+		var user_symps = [];
+		// Push each selected checkbox into array
+		$("input:checkbox:checked").each(function() {
+			user_symps.push($(this).attr('id'));
+		});
+		
+		// Makes sure user selects state and at least one symptom.
+		console.log(curr_state);
+		console.log(user_symps.length);
+		if(curr_state != -1 && user_symps.length != 0 && birth_year != -1) {
+			if(birth_year > 1995) {
+				$("#eligibility").text('You are most likely not eligible for medical marijuana.');
+				return;
+			}
+			// Check if curr state is a value of each user symptom in symptoms database
+ 				symptoms.once("value").then(function(snapshot){
+ 					for (var i = 0; i < user_symps.length; i++){
+ 						// an array of all the states in the current symptom being looped through
+ 						var temp = snapshot.child(user_symps[i]).val();
+ 						
+ 						// Check if yourstate abbreviation is in temp. if yes then treatment eligible
+ 						if(temp.indexOf(curr_state) > -1) {
+ 							// State is in the list of symptoms
+ 							$("#eligibility").text('You are likely eligible to recieve treatment!');
+ 							break;
+ 						}
+ 						
+ 						if(i == user_symps.length - 1) {
+ 							$("#eligibility").text('You are most likely not eligible for medical marijuana.');
+ 						}
+ 					}
+ 				})
+		}else {
+			$("#eligibility").text('Error: One or more fields not entered.');
+		}
+	});
+	
+</script>
 </html>
